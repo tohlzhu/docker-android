@@ -123,13 +123,13 @@ ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 # copy emulator.zip from outside
 # sdkmanager step by step
 #==============================================
-RUN sdkmanager --update
-RUn sdkmanager --licenses
+RUN yes | sdkmanager --update
+RUn yes | sdkmanager --licenses
 COPY emulator.zip /root/
 RUN unzip emulator.zip -d ${ANDROID_HOME} \
  && rm emulator.zip
-RUN sdkmanager "platforms;android-${API_LEVEL}"
-RUN sdkmanager "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}"
+RUN yes | sdkmanager "platforms;android-${API_LEVEL}"
+RUN yes | sdkmanager "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}"
 
 #==============================================
 # Download proper version of chromedriver
