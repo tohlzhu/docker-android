@@ -129,8 +129,6 @@ COPY sdk/emulator.zip /root/
 RUN unzip emulator.zip -d ${ANDROID_HOME} \
  && rm emulator.zip
 COPY sdk/package.xml ${ANDROID_HOME}/emulator/
-RUN mkdir ${ANDROID_HOME}/platforms \
- && mkdir ${ANDROID_HOME}/platform-tools
 RUN yes | sdkmanager "platforms;android-${API_LEVEL}"
 # RUN yes | sdkmanager "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}"
 RUN yes | sdkmanager "system-images;android-30;google_apis;arm64-v8a"
