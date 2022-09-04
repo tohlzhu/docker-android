@@ -89,7 +89,7 @@ RUN  wget -nv -O noVNC.zip "https://github.com/kanaka/noVNC/archive/${NOVNC_SHA}
 #==============================================
 # copy emulator.zip from outside
 #==============================================
-COPY /home/ubuntu/emulator.zip /root/
+COPY emulator.zip /root/
 RUN unzip emulator.zip -d ${ANDROID_HOME} \
  && rm emulator.zip
 
