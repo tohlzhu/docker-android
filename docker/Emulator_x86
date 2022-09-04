@@ -116,7 +116,7 @@ ENV ANDROID_VERSION=$ANDROID_VERSION \
     APP_TYPE=Emulator
 ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 
-#RUN yes | sdkmanager --licenses && \
+# RUN yes | sdkmanager --licenses && \
 #    sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator"
 
 #==============================================
@@ -129,7 +129,8 @@ COPY emulator.zip /root/
 RUN unzip emulator.zip -d ${ANDROID_HOME} \
  && rm emulator.zip
 RUN yes | sdkmanager "platforms;android-${API_LEVEL}"
-RUN yes | sdkmanager "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}"
+# RUN yes | sdkmanager "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}"
+RUN yes | sdkmanager "system-images;android-30;google_apis;arm64-v8a"
 
 #==============================================
 # Download proper version of chromedriver
