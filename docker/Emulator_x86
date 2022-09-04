@@ -86,13 +86,6 @@ RUN  wget -nv -O noVNC.zip "https://github.com/kanaka/noVNC/archive/${NOVNC_SHA}
  && rm websockify.zip \
  && ln noVNC/vnc_auto.html noVNC/index.html
 
-#==============================================
-# copy emulator.zip from outside
-#==============================================
-COPY emulator.zip /root/
-RUN unzip emulator.zip -d ${ANDROID_HOME} \
- && rm emulator.zip
-
 #======================
 # Install SDK packages
 #======================
@@ -123,8 +116,20 @@ ENV ANDROID_VERSION=$ANDROID_VERSION \
     APP_TYPE=Emulator
 ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 
-RUN yes | sdkmanager --licenses && \
-    sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}"
+#RUN yes | sdkmanager --licenses && \
+#    sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator"
+
+#==============================================
+# copy emulator.zip from outside
+# sdkmanager step by step
+#==============================================
+RUN sdkmanager --update
+RUn sdkmanager --licenses
+COPY emulator.zip /root/
+RUN unzip emulator.zip -d ${ANDROID_HOME} \
+ && rm emulator.zip
+RUN sdkmanager "platforms;android-${API_LEVEL}"
+RUN sdkmanager "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}"
 
 #==============================================
 # Download proper version of chromedriver
