@@ -130,8 +130,8 @@ ENV ANDROID_VERSION=$ANDROID_VERSION \
     APP_TYPE=Emulator
 ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 
-RUN yes | sdkmanager --licenses && \
-    sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator"
+# RUN yes | sdkmanager --licenses && \
+#     sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator"
 
 #==============================================
 # copy emulator.zip from outside

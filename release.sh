@@ -1,7 +1,8 @@
 #!/bin/bash
 # Bash version should >= 4 to be able to run this script.
 
-IMAGE="${DOCKER_ORG:-budtmo}/docker-android"
+#IMAGE="${DOCKER_ORG:-budtmo}/docker-android"
+IMAGE="${DOCKER_ORG:-tohlzhu}/docker-android"
 
 if [ -z "$1" ]; then
     read -p "Task (test|build|push|all) : " TASK
@@ -72,7 +73,8 @@ function get_android_versions() {
 }
 
 get_android_versions
-processor=x86
+# processor=x86
+processor=arm64-v8a
 
 function test() {
     # Prepare needed parameter to run tests
@@ -136,7 +138,8 @@ function build() {
     find . -name "*.pyc" -exec rm -f {} \;
 
     # Build docker image
-    FILE_NAME=docker/Emulator_x86
+    # FILE_NAME=docker/Emulator_x86
+    FILE_NAME=docker/Dockerfile
 
     for v in "${versions[@]}"; do
         level=${list_of_levels[$v]}
@@ -156,7 +159,8 @@ function build() {
             # Android 9 & Android 11 had build issues that requires 64-bit
             # Android 12+ Google dropped 32-bit support
             if [ "$v" == "9.0" ] || [ $level -ge 30 ]; then
-                processor=x86_64
+                # processor=x86_64
+                processor=arm64-v8a
             fi
         fi
         echo "[BUILD] IMAGE TYPE: $IMG_TYPE"
@@ -165,8 +169,10 @@ function build() {
         echo "[BUILD] System Image: $sys_img"
         chrome_driver="${chromedriver_versions[$v]}"
         echo "[BUILD] chromedriver version: $chrome_driver"
-        image_version="$IMAGE-x86-$v:$RELEASE"
-        image_latest="$IMAGE-x86-$v:latest"
+        # image_version="$IMAGE-x86-$v:$RELEASE"
+        # image_latest="$IMAGE-x86-$v:latest"
+        image_version="$IMAGE-arm64-$v:$RELEASE"
+        image_latest="$IMAGE-arm64-$v:latest"
         echo "[BUILD] Image name: $image_version and $image_latest"
         echo "[BUILD] Dockerfile: $FILE_NAME"
         docker build -t $image_version --build-arg TOKEN=$TOKEN --build-arg ANDROID_VERSION=$v --build-arg API_LEVEL=$level \
