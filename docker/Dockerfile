@@ -225,4 +225,8 @@ HEALTHCHECK --interval=2s --timeout=40s --retries=1 \
 
 RUN ln -s ${ANDROID_HOME}/emulator/emulator /usr/bin/
 
+# set params
+RUN echo "Vulkan = off" >> /root/.android/advancedFeatures.ini && \
+    echo "GLDirectMem = on" >> /root/.android/advancedFeatures.ini
+
 CMD /usr/bin/supervisord --configuration supervisord.conf
