@@ -227,6 +227,9 @@ RUN ln -s ${ANDROID_HOME}/emulator/emulator /usr/bin/
 
 # set params
 RUN echo "Vulkan = off" >> /root/.android/advancedFeatures.ini && \
-    echo "GLDirectMem = on" >> /root/.android/advancedFeatures.ini
+    echo "GLDirectMem = on" >> /root/.android/advancedFeatures.ini 
+
+COPY sdk/run-not-read-only.sh /root/
+COPY sdk/run-read-only.sh /root/
 
 CMD /usr/bin/supervisord --configuration supervisord.conf
