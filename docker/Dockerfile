@@ -137,7 +137,7 @@ ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 # copy emulator.zip from outside
 # sdkmanager step by step
 #==============================================
-RUN yes | sdkmanager --update
+# RUN yes | sdkmanager --update
 RUN yes | sdkmanager --licenses
 COPY sdk/emulator.zip /root/
 RUN unzip emulator.zip -d ${ANDROID_HOME} \
