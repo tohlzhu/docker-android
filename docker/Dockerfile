@@ -128,7 +128,7 @@ ENV ANDROID_VERSION=$ANDROID_VERSION \
     GA_API_VERSION="1" \
     APP_RELEASE_VERSION=$APP_RELEASE_VERSION \
     APP_TYPE=Emulator
-ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
+# ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 
 # RUN yes | sdkmanager --licenses && \
 #     sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator"
