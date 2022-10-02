@@ -139,7 +139,7 @@ ENV ANDROID_VERSION=$ANDROID_VERSION \
 #==============================================
 # RUN yes | sdkmanager --update
 RUN yes | sdkmanager --licenses
-COPY sdk/emulator.zip /root/
+COPY sdk/sdk-repo-linux_aarch64-emulator-9048937.zip /root/emulator.zip
 RUN unzip emulator.zip -d ${ANDROID_HOME} \
  && rm emulator.zip
 COPY sdk/package.xml ${ANDROID_HOME}/emulator/
