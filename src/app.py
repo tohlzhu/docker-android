@@ -204,6 +204,11 @@ def create_node_config(avd_name: str, browser_name: str, appium_host: str, appiu
     with open(CONFIG_FILE, 'w') as cf:
         cf.write(json.dumps(config))
 
+def start_adb_port_forward():
+    """Start adb forward cmd to expose apk listened ports."""
+    title = 'Debug Console'
+    cmd = '/root/src/adb_port_forward.sh'
+    subprocess.check_call('xterm -T "{title}" -n "{title}" -e \"{cmd}\"'.format(title=title, cmd=cmd), shell=True)
 
 def run():
     """Run app."""
@@ -239,6 +244,8 @@ def run():
     else:
         result = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE).communicate()
 
+    logger.info('Run adb_port_forward.sh...')
+    start_adb_port_forward()
 
 if __name__ == '__main__':
     run()
