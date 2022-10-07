@@ -105,8 +105,12 @@ RUN  wget -nv -O noVNC.zip "https://github.com/kanaka/noVNC/archive/${NOVNC_SHA}
 #======================
 ARG ANDROID_VERSION=5.0.1
 ARG API_LEVEL=21
-ARG PROCESSOR=x86
-ARG SYS_IMG=x86
+# ARG PROCESSOR=x86
+# ARG SYS_IMG=x86
+# this two ARG variable is overrided by release.sh, see release.sh/build()
+ARG PROCESSOR=arm64-v8a
+ARG SYS_IMG=arm64-v8a
+
 ARG IMG_TYPE=google_apis
 ARG BROWSER=android
 ARG CHROME_DRIVER=2.40
@@ -205,8 +209,10 @@ ENV QTWEBENGINE_DISABLE_SANDBOX=1
 #   Emulator port
 # 5555
 #   ADB connection port
+# 8080
+#   Web Server port
 #===============
-EXPOSE 4723 6080 5554 5555
+EXPOSE 4723 6080 5554 5555 8080
 
 #======================
 # Add Emulator Devices

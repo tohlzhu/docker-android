@@ -80,12 +80,18 @@ function test() {
     # Prepare needed parameter to run tests
     test_android_version=7.1.1
     test_api_level=25
-    test_processor=x86
+    # test_processor=x86
+    test_processor=$processor
     test_sys_img=$test_processor
     test_img_type=google_apis
     test_browser=chrome
-    test_image=test_img
+    # test_image=test_img
+    test_image="$IMAGE-arm64-$v:test"
     test_container=test_con
+
+    # Build docker image
+    # FILE_NAME=docker/Emulator_x86
+    FILE_NAME=docker/Dockerfile
 
     # Run e2e tests
     # E2E tests must be run only for linux OS / x86 image to reduce duration of test execution
@@ -93,7 +99,7 @@ function test() {
         echo "----BUILD TEST IMAGE----"
         docker build -t $test_image --build-arg ANDROID_VERSION=$test_android_version \
         --build-arg API_LEVEL=$test_api_level --build-arg PROCESSOR=$test_processor --build-arg SYS_IMG=$test_sys_img \
-        --build-arg IMG_TYPE=$test_img_type --build-arg BROWSER=$test_browser -f docker/Emulator_x86 .
+        --build-arg IMG_TYPE=$test_img_type --build-arg BROWSER=$test_browser -f $FILE_NAME .
 
         echo "----REMOVE OLD TEST CONTAINER----"
         docker kill $test_container && docker rm $test_container
@@ -186,8 +192,8 @@ function build() {
 function push() {
     # Push docker image(s)
     for v in "${versions[@]}"; do
-        image_version="$IMAGE-x86-$v:$RELEASE"
-        image_latest="$IMAGE-x86-$v:latest"
+        image_version="$IMAGE-arm64-$v:$RELEASE"
+        image_latest="$IMAGE-arm64-$v:latest"
         echo "[PUSH] Image name: $image_version and $image_latest"
         docker push $image_version
         docker push $image_latest
