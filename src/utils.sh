@@ -77,8 +77,29 @@ function enable_proxy_if_needed () {
   fi
 }
 
+function start_adb_port_forward () {
+  wait_emulator_to_be_ready
+
+  echo "Going to replace adb -L with adb -a"
+  nohup adb kill-server &&  adb -a nodaemon server start > /dev/null 2>&1 &
+  sleep 2
+
+  echo "make sure adb started"
+  adb devices -l
+  sleep 1
+
+  echo "Add port forward for 8080"
+  apk_port=8080
+  adb forward tcp:${apk_port} tcp:${apk_port}
+  sleep 1
+  
+  adb forward --list
+}
+
 change_language_if_needed
 sleep 1
 enable_proxy_if_needed
 sleep 1
 install_google_play
+sleep 1
+start_adb_port_forward
